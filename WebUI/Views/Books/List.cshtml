@@ -1,17 +1,21 @@
-﻿@using Domain.Entities
-@model IEnumerable<Book>
+﻿@using WebUI.Models
+@model BooksListViewModel
 
 @{
     ViewBag.Title = "Books";
 }
 
-@foreach(Book book in Model)
+@foreach(var book in Model.Books)
 {
     <div>
-        <h3>@book.Name</h3>
-        <p>@book.Author</p>
+        <h3>@book.Name - @book.Author</h3>
+        <p>@book.Description</p>
         <h4>@book.Price.ToString("# $")</h4>
     </div>
     <hr/>
 }
+
+<div>
+    @Html.PageLinks(Model.PagingIngo, x => Url.Action("List", new { page = x }))
+</div>
 

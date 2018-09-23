@@ -18,20 +18,24 @@ namespace WebUI.Controllers
             repository = repo;
         }
 
-        public ViewResult List(int page = 1)
+        public ViewResult List(string genre, int page = 1)
         {
             BooksListViewModel model = new BooksListViewModel()
             {
-                Books = repository.Books.
-                OrderBy(b => b.BookId)
+                Books = repository.Books
+                .Where(b => genre == null || b.Genre == genre)
+                .OrderBy(b => b.BookId)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize),
                 PagingIngo = new PagingInfo
                 {
                     CurrentPage = page,
                     ItemsPerPage = pageSize,
-                    TotalItems = repository.Books.Count()
-                }
+                    TotalItems = genre == null ? 
+                                                 repository.Books.Count() 
+                                               : repository.Books.Where(b => b.Genre == genre).Count()
+                },
+                CurrentGenre = genre
             };
 
             return View(model);

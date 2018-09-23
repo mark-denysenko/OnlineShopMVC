@@ -7,15 +7,10 @@
 
 @foreach(var book in Model.Books)
 {
-    <div>
-        <h3>@book.Name - @book.Author</h3>
-        <p>@book.Description</p>
-        <h4>@book.Price.ToString("# $")</h4>
-    </div>
-    <hr/>
+    @Html.Partial("_BookSummary", book)
 }
 
-<div>
+<div class="btn-group pull-right">
     @Html.PageLinks(Model.PagingIngo, x => Url.Action("List", new { page = x }))
 </div>
 

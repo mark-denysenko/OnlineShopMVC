@@ -13,10 +13,18 @@
 
         <div class="col-xs-2">
             <h3>
-                <strong class="pull-right label label-primary">
+                <strong id="price" class="pull-right label label-primary">
                     @Model.Price.ToString("#.00 $")
                 </strong>
             </h3>
+            @using (Html.BeginForm("AddTocart", "Cart"))
+            {
+                <div class="pull-right">
+                    @Html.HiddenFor(b => b.BookId)
+                    @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                    <input type="submit" class="btn btn-success" value="Add to cart" />
+                </div>
+            }
         </div>
     </div>
     <span class="lead">@Model.Description</span>

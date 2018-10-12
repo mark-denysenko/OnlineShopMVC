@@ -32,7 +32,7 @@ namespace WebUI.Infrastructure
         private void AddBindings()
         {
             // привязка данных
-            ///* имитированные данные (imitation of info)
+            /* имитированные данные (imitation of info)
             Mock<IBookRepository> mock = new Mock<IBookRepository>();
             mock.Setup(m => m.Books).Returns(new List<Book>
             {
@@ -51,7 +51,7 @@ namespace WebUI.Infrastructure
             //*/
 
             // Taking info from Db (use in developing)
-            //kernel.Bind<IBookRepository>().To<EFBookRepository>();
+            kernel.Bind<IBookRepository>().To<EFBookRepository>();
         }
 
         public object GetService(Type serviceType)

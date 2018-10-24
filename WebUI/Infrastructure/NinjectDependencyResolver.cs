@@ -9,6 +9,7 @@ using Domain.Abstract;
 using Moq;
 using Domain.Entities;
 using Domain.Concrete;
+using System.Configuration;
 
 namespace WebUI.Infrastructure
 {
@@ -52,6 +53,14 @@ namespace WebUI.Infrastructure
 
             // Taking info from Db (use in developing)
             kernel.Bind<IBookRepository>().To<EFBookRepository>();
+
+            EmailSettings emailSettings = new EmailSettings
+            {
+                WriteAsFile = bool.Parse(ConfigurationManager.AppSettings["Email.WriteAsFile"] ?? "false")
+            };
+
+            kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>()
+                .WithConstructorArgument("settings", emailSettings);
         }
 
         public object GetService(Type serviceType)
